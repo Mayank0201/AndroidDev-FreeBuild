@@ -1,0 +1,172 @@
+<resources>
+    <string name="app_name">30 Days App</string>
+    <string name="disclaimer">This app uses The Movie Database (TMDb) API for content but is not endorsed or certified by TMDb.</string>
+    <string name="day1">Day 1</string>
+    <string name="day2">Day 2</string>
+    <string name="day3">Day 3</string>
+    <string name="day4">Day 4</string>
+    <string name="day5">Day 5</string>
+    <string name="day6">Day 6</string>
+    <string name="day7">Day 7</string>
+    <string name="day8">Day 8</string>
+    <string name="day9">Day 9</string>
+    <string name="day10">Day 10</string>
+    <string name="day11">Day 11</string>
+    <string name="day12">Day 12</string>
+    <string name="day13">Day 13</string>
+    <string name="day14">Day 14</string>
+    <string name="day15">Day 15</string>
+    <string name="day16">Day 16</string>
+    <string name="day17">Day 17</string>
+    <string name="day18">Day 18</string>
+    <string name="day19">Day 19</string>
+    <string name="day20">Day 20</string>
+    <string name="day21">Day 21</string>
+    <string name="day22">Day 22</string>
+    <string name="day23">Day 23</string>
+    <string name="day24">Day 24</string>
+    <string name="day25">Day 25</string>
+    <string name="day26">Day 26</string>
+    <string name="day27">Day 27</string>
+    <string name="day28">Day 28</string>
+    <string name="day29">Day 29</string>
+    <string name="day30">Day 30</string>
+    <string name="day31">Day 31</string>
+
+    <!-- Day 1: Spooky Sunday -->
+    <string name="movie_day1">The Conjuring 1 &amp; 2</string>
+    <string name="theme_sunday">Spooky Sunday</string>
+
+    <!-- Day 2: Mind-Bending Monday -->
+    <string name="movie_day2">Inception</string>
+    <string name="theme_monday">Mind-Bending Monday by Nolan</string>
+
+    <!-- Day 3: Tarantino Tuesday -->
+    <string name="movie_day3">Kill Bill Vol. 1 &amp; 2</string>
+    <string name="theme_tuesday">Tarantino Tuesday</string>
+
+    <!-- Day 4: Wholesome Wednesday -->
+    <string name="movie_day4">The Green Book</string>
+    <string name="theme_wednesday">Wholesome Wednesday</string>
+
+    <!-- Day 5: Throwback Thursday -->
+    <string name="movie_day5">Back to the Future</string>
+    <string name="theme_thursday">Throwback Thursday</string>
+
+    <!-- Day 6: Fincher Friday -->
+    <string name="movie_day6">Se7en</string>
+    <string name="theme_friday">Fincher Friday</string>
+
+    <!-- Day 7: Satirical Saturday -->
+    <string name="movie_day7">The Hangover Trilogy</string>
+    <string name="theme_saturday">Satirical Saturday</string>
+
+    <!-- Day 8: Spooky Sunday -->
+    <string name="movie_day8">It &amp; It 2</string>
+
+    <!-- Day 9: Mind-Bending Monday -->
+    <string name="movie_day9">Interstellar</string>
+
+    <!-- Day 10: Tarantino Tuesday -->
+    <string name="movie_day10">Pulp Fiction</string>
+
+    <!-- Day 11: Wholesome Wednesday -->
+    <string name="movie_day11">Bruce Almighty</string>
+
+    <!-- Day 12: Throwback Thursday -->
+    <string name="movie_day12">The Breakfast Club</string>
+
+    <!-- Day 13: Fincher Friday -->
+    <string name="movie_day13">Fight Club</string>
+
+    <!-- Day 14: Satirical Saturday -->
+    <string name="movie_day14">Rush Hour Trilogy</string>
+
+    <!-- Day 15: Spooky Sunday -->
+    <string name="movie_day15">The Ring Trilogy</string>
+
+    <!-- Day 16: Mind-Bending Monday -->
+    <string name="movie_day16">Shutter Island</string>
+
+    <!-- Day 17: Tarantino Tuesday -->
+    <string name="movie_day17">Django Unchained</string>
+
+    <!-- Day 18: Wholesome Wednesday -->
+    <string name="movie_day18">Forrest Gump</string>
+
+    <!-- Day 19: Throwback Thursday -->
+    <string name="movie_day19">Shawshank Redemption</string>
+
+    <!-- Day 20: Fincher Friday -->
+    <string name="movie_day20">Zodiac</string>
+
+    <!-- Day 21: Satirical Saturday -->
+    <string name="movie_day21">Hot Fuzz</string>
+
+    <!-- Day 22: Spooky Sunday -->
+    <string name="movie_day22">28 Days Later</string>
+
+    <!-- Day 23: Mind-Bending Monday -->
+    <string name="movie_day23">Tenet</string>
+
+    <!-- Day 24: Tarantino Tuesday -->
+    <string name="movie_day24">Inglourious Basterds</string>
+
+    <!-- Day 25: Wholesome Wednesday -->
+    <string name="movie_day25">Amélie</string>
+
+    <!-- Day 26: Throwback Thursday -->
+    <string name="movie_day26">Ferris Bueller’s Day Off</string>
+
+    <!-- Day 27: Fincher Friday -->
+    <string name="movie_day27">Gone Girl</string>
+
+    <!-- Day 28: Satirical Saturday -->
+    <string name="movie_day28">The Interview</string>
+
+    <!-- Day 29: Spooky Sunday -->
+    <string name="movie_day29">Hereditary</string>
+
+    <!-- Day 30: Mind-Bending Monday -->
+    <string name="movie_day30">Memento</string>
+
+    <!-- Day 31: Tarantino Tuesday (Free Choice / Bonus) -->
+    <string name="movie_day31">Reservoir Dogs</string>
+
+    <string name="day1_desc">Paranormal investigators tackle dark forces in two terrifying real-life cases. (The Conjuring 1 &amp; 2)</string>
+    <string name="day2_desc">A skilled thief infiltrates dreams to steal secrets but must plant an idea in a mind instead. (Inception)</string>
+    <string name="day3_desc">A former assassin seeks revenge on her ex-lover and teammates who tried to kill her. (Kill Bill Vol. 1 &amp; 2)</string>
+    <string name="day4_desc">A shy Parisian girl decides to help others find happiness in whimsical, imaginative ways. (Amélie)</string>
+    <string name="day5_desc">A teenager accidentally travels to 1955 and must ensure his parents fall in love. (Back to the Future)</string>
+    <string name="day6_desc">Two detectives hunt a serial killer who uses the seven deadly sins as his motive. (Se7en)</string>
+    <string name="day7_desc">Three friends deal with the hilarious fallout of wild bachelor parties gone wrong. (The Hangover Trilogy)</string>
+
+    <string name="day8_desc">A shape-shifting clown terrorizes children in a small town, feeding off their fears. (It)</string>
+    <string name="day9_desc">Earth is dying, and a team of astronauts travels through a wormhole to find a new home for humanity. (Interstellar)</string>
+    <string name="day10_desc">Interconnected stories of hitmen, boxers, and criminals in L.A., full of sharp dialogue and violence. (Pulp Fiction)</string>
+    <string name="day11_desc">A man is temporarily granted God’s powers and learns responsibility and faith. (Bruce Almighty)</string>
+    <string name="day12_desc">Five high school students from different cliques bond during Saturday detention. (The Breakfast Club)</string>
+    <string name="day13_desc">An insomniac office worker forms an underground fight club that spirals out of control. (Fight Club)</string>
+    <string name="day14_desc">An L.A. cop and a Hong Kong inspector team up for action-packed, comedic adventures. (Rush Hour Trilogy)</string>
+
+    <string name="day15_desc">A cursed videotape causes horrifying deaths unless the mystery behind it is solved. (Ring Trilogy)</string>
+    <string name="day16_desc">A U.S. Marshal investigates a missing patient in a psychiatric facility, uncovering dark truths. (Shutter Island)</string>
+    <string name="day17_desc">A freed slave partners with a bounty hunter to rescue his wife from a brutal plantation owner. (Django Unchained)</string>
+    <string name="day18_desc">A kind-hearted man unwittingly influences major historical events across decades. (Forrest Gump)</string>
+    <string name="day19_desc">Dinosaurs are cloned and brought back to life, but a park visit turns into a survival nightmare. (Jurassic Park)</string>
+    <string name="day20_desc">A cartoonist becomes obsessed with finding the real identity of the Zodiac Killer. (Zodiac)</string>
+    <string name="day21_desc">A top London cop uncovers a murderous conspiracy in a sleepy village. (Hot Fuzz)</string>
+
+    <string name="day22_desc">A virus devastates Britain, turning people into rage-filled creatures. (28 Days Later)</string>
+    <string name="day23_desc">A man fights for survival and understanding in a world where time can move backward. (Tenet)</string>
+    <string name="day24_desc">A group of Jewish soldiers plans to assassinate Nazi leaders during WWII. (Inglourious Basterds)</string>
+    <string name="day25_desc">A black pianist and his Italian-American driver form an unlikely friendship on a 1960s tour. (Green Book)</string>
+    <string name="day26_desc">A charming teen skips school and enjoys a wild day around Chicago. (Ferris Bueller’s Day Off)</string>
+    <string name="day27_desc">A man becomes the focus of media frenzy when his wife mysteriously disappears. (Gone Girl)</string>
+    <string name="day28_desc">Two journalists are recruited to assassinate North Korea’s leader during a TV interview trip. (The Interview)</string>
+
+    <string name="day29_desc">A family unravels disturbing secrets after the death of their secretive grandmother. (Hereditary)</string>
+    <string name="day30_desc">A man with short-term memory loss uses notes and tattoos to hunt his wife’s killer. (Memento)</string>
+    <string name="day31_desc">Break day! Choose any movie you love or revisit a favorite from the month.</string>
+
+</resources>
