@@ -1,12 +1,12 @@
 package com.example.a30daysapp
 
-import android.graphics.Color
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -46,6 +46,7 @@ import com.example.a30daysapp.ui.theme.SpookyColor
 import com.example.a30daysapp.ui.theme.TarantinoColor
 import com.example.a30daysapp.ui.theme.ThrowbackColor
 import com.example.a30daysapp.ui.theme.WholesomeColor
+import androidx.compose.ui.graphics.Color
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -66,18 +67,26 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun MainApp(modifier: Modifier = Modifier) {
+    Column(modifier=modifier.fillMaxSize()){
     MovieList(movieList=Movies,modifier=modifier)
-    Text(text=stringResource(R.string.disclaimer))
-
+    }
 }
 
+
 @Composable
-fun MovieList(movieList:List<Movie>,modifier: Modifier=Modifier){
-    LazyColumn(modifier=modifier.fillMaxSize()){
-        items(movieList){movie ->
-            MovieCard(
-                movie=movie,
-                modifier=modifier
+fun MovieList(movieList:List<Movie>,modifier: Modifier=Modifier) {
+
+    LazyColumn(modifier = modifier.fillMaxSize()
+    ) {
+        items(movieList) { movie ->
+            MovieCard(movie = movie)
+            Spacer(modifier=modifier.padding(8.dp))
+        }
+
+        item {
+            Text(
+                text = stringResource(R.string.disclaimer),
+                modifier = modifier.padding(8.dp)
             )
         }
     }
@@ -91,7 +100,6 @@ fun MovieCard(movie: Movie, modifier: Modifier = Modifier) {
     val screen = LocalConfiguration.current
     val sHeight = screen.screenHeightDp
 
-    // Get theme-specific base color when expanded
     val themeColor = when (stringResource(id = movie.theme)) {
         stringResource(R.string.theme_monday) -> MindBendingColor
         stringResource(R.string.theme_tuesday) -> TarantinoColor
@@ -100,22 +108,48 @@ fun MovieCard(movie: Movie, modifier: Modifier = Modifier) {
         stringResource(R.string.theme_friday) -> FincherColor
         stringResource(R.string.theme_saturday) -> SatiricalColor
         stringResource(R.string.theme_sunday) -> SpookyColor
-        else -> MaterialTheme.colorScheme.tertiaryContainer
+        else -> MaterialTheme.colorScheme.primaryContainer
     }
 
+    val fontColor = when (stringResource(id = movie.theme)) {
+        stringResource(R.string.theme_monday) -> Color.White
+        stringResource(R.string.theme_tuesday) -> Color.Black
+        stringResource(R.string.theme_wednesday) -> Color.Black
+        stringResource(R.string.theme_thursday) -> Color.White
+        stringResource(R.string.theme_friday) -> Color.White
+        stringResource(R.string.theme_saturday) -> Color.Black
+        stringResource(R.string.theme_sunday) -> Color.White
+        else -> Color.White
+    }
     val cardColor by animateColorAsState(
-        targetValue = if (expanded) themeColor else MaterialTheme.colorScheme.primaryContainer,
+        targetValue = if (expanded) themeColor else MaterialTheme.colorScheme.secondaryContainer,
+        label = "Card color animation"
+    )
+
+    val fontCardColor by animateColorAsState(
+        targetValue = if (expanded) fontColor else Color.White,
         label = "Card color animation"
     )
 
     Card(
-        modifier = modifier.fillMaxWidth(),
-        colors = CardDefaults.cardColors(containerColor = cardColor)
+        modifier = modifier.fillMaxWidth()
+            .border(width=2.dp,color = Color.White,
+                shape=MaterialTheme.shapes.small),
+        colors = CardDefaults.cardColors(containerColor = cardColor),
+        elevation = CardDefaults.cardElevation(
+            defaultElevation = 6.dp
+        )
     ) {
-        Column(modifier = modifier.padding(16.dp)) {
-            Text(text = stringResource(id = movie.day), style = MaterialTheme.typography.labelLarge)
-            Text(text = stringResource(id = movie.movieName), style = MaterialTheme.typography.titleMedium)
-            Text(text = stringResource(id = movie.theme), style = MaterialTheme.typography.labelSmall)
+        Column(modifier = modifier.padding(8.dp)) {
+            Text(text = stringResource(id = movie.day),
+                color=fontCardColor,
+                style = MaterialTheme.typography.labelLarge)
+            Text(text = stringResource(id = movie.movieName),
+                color=fontCardColor,
+                style = MaterialTheme.typography.titleMedium)
+            Text(text = stringResource(id = movie.theme),
+                color=fontCardColor,
+                style = MaterialTheme.typography.labelSmall)
 
             Image(
                 painter = painterResource(id = movie.imgId),
@@ -131,7 +165,9 @@ fun MovieCard(movie: Movie, modifier: Modifier = Modifier) {
 
             if (expanded) {
                 Spacer(modifier = Modifier.height(8.dp))
-                Text(text = stringResource(id = movie.about), style = MaterialTheme.typography.bodyMedium)
+                Text(text = stringResource(id = movie.about),
+                    color=fontCardColor,
+                    style = MaterialTheme.typography.bodyMedium)
             }
         }
     }

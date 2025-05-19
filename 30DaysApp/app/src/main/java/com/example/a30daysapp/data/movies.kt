@@ -46,3 +46,4 @@ val Movies = listOf(
     Movie(R.string.day30, R.string.movie_day30, R.string.theme_monday, R.drawable.movie30, R.string.day30_desc),
     Movie(R.string.day31, R.string.movie_day31, R.string.theme_tuesday, R.drawable.movie31, R.string.day31_desc)
 )
+

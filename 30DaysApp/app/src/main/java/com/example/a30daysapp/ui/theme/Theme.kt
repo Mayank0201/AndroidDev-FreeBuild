@@ -253,7 +253,6 @@ private val highContrastDarkColorScheme = darkColorScheme(
 @Composable
 fun _30DaysAppTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    // Dynamic color is available on Android 12+
     dynamicColor: Boolean = true,
     content: @Composable() () -> Unit
 ) {
@@ -270,6 +269,7 @@ fun _30DaysAppTheme(
     MaterialTheme(
         colorScheme = colorScheme,
         typography = Typography,
+        shapes = Shapes,
         content = content
     )
 }
