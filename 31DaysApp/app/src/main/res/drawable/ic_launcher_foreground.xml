@@ -1,0 +1,46 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+
+    <!-- Background circle with radial gradient -->
+    <path
+        android:pathData="M12,2A10,10 0 1,0 22,12A10,10 0 0,0 12,2Z">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:type="radial"
+                android:centerX="12"
+                android:centerY="12"
+                android:gradientRadius="12"
+                android:startColor="#FF4A90E2"
+                android:endColor="#FF1C3F72"/>
+        </aapt:attr>
+    </path>
+
+    <!-- Reel outer white circle -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M12,7a5,5 0 1,1 0,10a5,5 0 0,1 0,-10z" />
+
+    <!-- Reel holes: small circles created with path commands -->
+    <path
+        android:fillColor="#4A90E2"
+        android:pathData="M8.2,7.5a0.8,0.8 0 1,1 1.6,0a0.8,0.8 0 0,1 -1.6,0z" />
+    <path
+        android:fillColor="#4A90E2"
+        android:pathData="M14.2,7.5a0.8,0.8 0 1,1 1.6,0a0.8,0.8 0 0,1 -1.6,0z" />
+    <path
+        android:fillColor="#4A90E2"
+        android:pathData="M8.2,15.5a0.8,0.8 0 1,1 1.6,0a0.8,0.8 0 0,1 -1.6,0z" />
+    <path
+        android:fillColor="#4A90E2"
+        android:pathData="M14.2,15.5a0.8,0.8 0 1,1 1.6,0a0.8,0.8 0 0,1 -1.6,0z" />
+
+    <!-- Inner circle -->
+    <path
+        android:fillColor="#4A90E2"
+        android:pathData="M12,10a2,2 0 1,1 0,4a2,2 0 0,1 0,-4z" />
+
+</vector>

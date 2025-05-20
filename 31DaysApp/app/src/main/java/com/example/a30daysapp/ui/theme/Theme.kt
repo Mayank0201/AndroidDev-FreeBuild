@@ -251,7 +251,7 @@ private val highContrastDarkColorScheme = darkColorScheme(
 
 
 @Composable
-fun _30DaysAppTheme(
+fun _31DaysAppTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     dynamicColor: Boolean = true,
     content: @Composable() () -> Unit

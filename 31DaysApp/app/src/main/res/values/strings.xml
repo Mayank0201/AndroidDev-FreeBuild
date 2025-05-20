@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">30 Days App</string>
+    <string name="app_name">31 Days Of Movies</string>
     <string name="disclaimer">This app uses The Movie Database (TMDb) API for content but is not endorsed or certified by TMDb.</string>
     <string name="day1">Day 1</string>
     <string name="day2">Day 2</string>

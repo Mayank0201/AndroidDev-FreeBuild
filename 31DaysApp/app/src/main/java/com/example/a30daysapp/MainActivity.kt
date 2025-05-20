@@ -1,10 +1,14 @@
 package com.example.a30daysapp
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.spring
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
@@ -30,11 +34,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.a30daysapp.data.Movie
 import com.example.a30daysapp.data.Movies
-import com.example.a30daysapp.ui.theme._30DaysAppTheme
+import com.example.a30daysapp.ui.theme._31DaysAppTheme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.material.icons.filled.ExpandLess
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -47,13 +53,16 @@ import com.example.a30daysapp.ui.theme.TarantinoColor
 import com.example.a30daysapp.ui.theme.ThrowbackColor
 import com.example.a30daysapp.ui.theme.WholesomeColor
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            _30DaysAppTheme {
+            _31DaysAppTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     MainApp(
                         modifier = Modifier.padding(innerPadding)
@@ -65,13 +74,24 @@ class MainActivity : ComponentActivity() {
 }
 
 
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun MainApp(modifier: Modifier = Modifier) {
-    Column(modifier=modifier.fillMaxSize()){
-    MovieList(movieList=Movies,modifier=modifier)
-    }
+fun MainApp(modifier:Modifier=Modifier) {
+    Scaffold(
+        topBar = {
+            TopAppBar()
+        },
+        content = { innerPadding ->
+            Column(
+                modifier = modifier
+                    .padding(innerPadding)
+                    .fillMaxSize()
+            ) {
+                MovieList(movieList = Movies)
+            }
+        }
+    )
 }
-
 
 @Composable
 fun MovieList(movieList:List<Movie>,modifier: Modifier=Modifier) {
@@ -119,15 +139,27 @@ fun MovieCard(movie: Movie, modifier: Modifier = Modifier) {
         stringResource(R.string.theme_friday) -> Color.White
         stringResource(R.string.theme_saturday) -> Color.Black
         stringResource(R.string.theme_sunday) -> Color.White
-        else -> Color.White
+        else -> Color.Black
     }
+
+    val fontType = when (stringResource(id = movie.theme)) {
+        stringResource(R.string.theme_monday) -> FontFamily(Font(R.font.ibmplexsans_regular))
+        stringResource(R.string.theme_tuesday) -> FontFamily(Font(R.font.bebasneue_regular))
+        stringResource(R.string.theme_wednesday) -> FontFamily(Font(R.font.anton_regular))
+        stringResource(R.string.theme_thursday) -> FontFamily(Font(R.font.nunito_regular))
+        stringResource(R.string.theme_friday) -> FontFamily(Font(R.font.josefinsans_regular))
+        stringResource(R.string.theme_saturday) -> FontFamily(Font(R.font.fredoka_regular))
+        stringResource(R.string.theme_sunday) -> FontFamily(Font(R.font.creepster_regular))
+        else -> FontFamily(Font(R.font.anton_regular))
+    }
+
     val cardColor by animateColorAsState(
-        targetValue = if (expanded) themeColor else MaterialTheme.colorScheme.secondaryContainer,
+        targetValue = if (expanded) themeColor else MaterialTheme.colorScheme.primary,
         label = "Card color animation"
     )
 
     val fontCardColor by animateColorAsState(
-        targetValue = if (expanded) fontColor else Color.White,
+        targetValue = if (expanded) fontColor else Color.Black,
         label = "Card color animation"
     )
 
@@ -140,37 +172,68 @@ fun MovieCard(movie: Movie, modifier: Modifier = Modifier) {
             defaultElevation = 6.dp
         )
     ) {
-        Column(modifier = modifier.padding(8.dp)) {
+        Column(modifier = modifier.padding(8.dp).animateContentSize(
+            animationSpec = spring(
+                dampingRatio = Spring.DampingRatioMediumBouncy,
+                stiffness = Spring.StiffnessLow
+            ))){
+
             Text(text = stringResource(id = movie.day),
                 color=fontCardColor,
-                style = MaterialTheme.typography.labelLarge)
+                style = MaterialTheme.typography.labelMedium,
+                fontFamily = fontType)
+
             Text(text = stringResource(id = movie.movieName),
                 color=fontCardColor,
-                style = MaterialTheme.typography.titleMedium)
+                style = MaterialTheme.typography.titleMedium,
+                fontFamily = fontType)
+
             Text(text = stringResource(id = movie.theme),
                 color=fontCardColor,
-                style = MaterialTheme.typography.labelSmall)
+                style = MaterialTheme.typography.labelMedium,
+                fontFamily = fontType)
+
+            Spacer(modifier=modifier.height(5.dp))
 
             Image(
                 painter = painterResource(id = movie.imgId),
                 contentDescription = null,
                 modifier = modifier
                     .fillMaxWidth()
-                    .height((sHeight * 0.3).dp)
+                    .height((sHeight * 0.4).dp)
             )
 
             MovieButton(expanded = expanded, onClick =  {
                 expanded = !expanded
-            })
+            },
+                color=fontCardColor)
 
             if (expanded) {
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(text = stringResource(id = movie.about),
                     color=fontCardColor,
-                    style = MaterialTheme.typography.bodyMedium)
+                    style = MaterialTheme.typography.bodyMedium,
+                    fontFamily = fontType)
             }
         }
     }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun TopAppBar() {
+    CenterAlignedTopAppBar(
+        title = {
+                Text(
+                    text = stringResource(R.string.app_name),
+                    style = MaterialTheme.typography.displaySmall,
+                    fontWeight = FontWeight.Bold
+
+                )
+            }
+
+    )
+
 }
 
 
@@ -178,6 +241,7 @@ fun MovieCard(movie: Movie, modifier: Modifier = Modifier) {
 private fun MovieButton(
     expanded: Boolean,
     onClick: () -> Unit,
+    color:Color,
     modifier: Modifier = Modifier
 ) {
     IconButton(
@@ -187,7 +251,7 @@ private fun MovieButton(
         Icon(
             imageVector = if (expanded) Icons.Filled.ExpandLess else Icons.Filled.ExpandMore,
             contentDescription ="Expand button",
-            tint = MaterialTheme.colorScheme.secondary
+            tint =color
         )
     }
 }
