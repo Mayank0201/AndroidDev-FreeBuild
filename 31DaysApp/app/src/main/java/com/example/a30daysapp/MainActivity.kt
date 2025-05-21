@@ -154,18 +154,18 @@ fun MovieCard(movie: Movie, modifier: Modifier = Modifier) {
     }
 
     val cardColor by animateColorAsState(
-        targetValue = if (expanded) themeColor else MaterialTheme.colorScheme.primary,
+        targetValue = if (expanded) themeColor else Color.Black,
         label = "Card color animation"
     )
 
     val fontCardColor by animateColorAsState(
-        targetValue = if (expanded) fontColor else Color.Black,
+        targetValue = if (expanded) fontColor else Color.White,
         label = "Card color animation"
     )
 
     Card(
         modifier = modifier.fillMaxWidth()
-            .border(width=2.dp,color = Color.White,
+            .border(width=1.dp,color = Color.White,
                 shape=MaterialTheme.shapes.small),
         colors = CardDefaults.cardColors(containerColor = cardColor),
         elevation = CardDefaults.cardElevation(
