@@ -197,7 +197,7 @@ fun MovieCard(movie: Movie, modifier: Modifier = Modifier) {
 
             Image(
                 painter = painterResource(id = movie.imgId),
-                contentDescription = null,
+                contentDescription = stringResource(movie.movieName),
                 modifier = modifier
                     .fillMaxWidth()
                     .height((sHeight * 0.4).dp)
