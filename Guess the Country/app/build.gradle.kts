@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.myunscrambled"
+    namespace = "com.example.gtc"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.myunscrambled"
+        applicationId = "com.example.gtc"
         minSdk = 24
         targetSdk = 35
         versionCode = 1
