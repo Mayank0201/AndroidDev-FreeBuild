@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Art Space</string>
+    <string name="first_title">Canyon Arizona</string>
+    <string name="first_author"><b>Ray Bilcliff(2018)</b></string>
+    <string name="second_title">King Vulture Perching On Branch</string>
+    <string name="second_author"><b>Jonnathan Marin(2023)</b></string>
+    <string name="Third_title">The Toucan</string>
+    <string name="third_author"><b>Martin Magnemyr</b>(2020)</string>
+    <string name="Fourth_title">The Chameleon</string>
+    <string name="fourth_author"><b>Matt Marakis(2020)</b></string>
+
+    <string name="footer">Some media in this app is sourced from Pexels.com under their free license.</string>
+</resources>
