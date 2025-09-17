@@ -20,77 +20,141 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.TextButton
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.text.input.TextFieldValue
 import coil.compose.rememberAsyncImagePainter
 import com.example.bookshelf.model.BookShelfItem
 
-
 @Composable
-fun BookShelfScreen(
-    modifier: Modifier = Modifier,
-    viewModel: BookShelfViewModel
-) {
-
+fun BookShelfScreen(modifier: Modifier = Modifier, viewModel: BookShelfViewModel) {
     val state = viewModel.bookShelfState.value
-    Text("Loaded: ${state.list.size} books")
-    when {
-        state.loading -> {
-            Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                CircularProgressIndicator()
+    val suggestions by viewModel.suggestions.collectAsState()
+
+    var query by remember { mutableStateOf(TextFieldValue("")) }
+    var showSuggestions by remember { mutableStateOf(true) }
+
+    Column(modifier = modifier.fillMaxSize()) {
+        OutlinedTextField(
+            value = query,
+            onValueChange = {
+                query = it
+                showSuggestions = true
+                viewModel.fetchSuggestions(it.text)
+            },
+            label = { Text("Search Books") },
+            modifier = modifier.fillMaxWidth()
+                .padding(horizontal=6.dp)
+        )
+
+        if (showSuggestions && suggestions.isNotEmpty()) {
+            Column(
+                modifier = modifier.fillMaxWidth()
+                    .padding(horizontal = 8.dp)
+            ) {
+                suggestions.forEach { suggestion ->
+                    TextButton(
+                        onClick = {
+                            query = TextFieldValue(suggestion)
+                            showSuggestions = false
+                            viewModel.fetchBooks(suggestion)
+                        },
+                        modifier = modifier.fillMaxWidth()
+                    ) {
+                        Text(suggestion)
+                    }
+                }
             }
         }
 
-        state.error != null -> {
-            Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                Text("Error: ${state.error}")
-            }
+        Button(
+            onClick = {
+                showSuggestions = false
+                viewModel.fetchBooks(query.text)
+            },
+            modifier = modifier.align(Alignment.End)
+                .padding(end = 8.dp)
+        ) {
+            Text("Search")
         }
 
-        else -> {
-            BookShelfList(
-                modifier = modifier.fillMaxSize(),
-                bookList = state.list
-            )
+        when {
+            state.loading -> {
+                Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                    CircularProgressIndicator()
+                }
+            }
+            state.error != null -> {
+                Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                    Text("Error: ${state.error}")
+                }
+            }
+            else -> {
+                BookShelfList(
+                    bookList = state.list,
+                    modifier = modifier.weight(1f)
+                )
+            }
         }
     }
 }
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun BookShelfList(
-    modifier: Modifier = Modifier,
-    bookList: List<BookShelfItem>
-) {
+fun BookShelfList(bookList: List<BookShelfItem>,modifier: Modifier = Modifier) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
-        modifier = modifier,
-        contentPadding = PaddingValues(8.dp)
+        modifier = modifier.fillMaxSize(),
+        contentPadding = PaddingValues(12.dp),
+        verticalArrangement = Arrangement.spacedBy(12.dp),
+        horizontalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         items(bookList) { book ->
-            BookShelfItem(book = book)
+            BookShelfCard(book = book)
         }
     }
 }
 
 @Composable
-fun BookShelfItem(
-    modifier: Modifier = Modifier,
-    book: BookShelfItem
-) {
+fun BookShelfCard(book: BookShelfItem,modifier: Modifier = Modifier) {
     val imageUrl = book.volumeInfo.imageLinks?.thumbnail?.replace("http", "https")
 
     Card(
-        modifier = modifier
-            .padding(8.dp)
-            .fillMaxWidth(),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+        shape = RoundedCornerShape(16.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 6.dp),
+        modifier = modifier.fillMaxWidth()
+            .height(240.dp)
     ) {
-        Image(
-            painter = rememberAsyncImagePainter(imageUrl),
-            contentDescription = book.volumeInfo.title,
-            modifier = modifier
-                .fillMaxWidth()
-                .height(200.dp),
-            contentScale = ContentScale.Crop
-        )
+        Box(modifier = modifier.fillMaxSize()) {
+            Image(
+                painter = rememberAsyncImagePainter(imageUrl),
+                contentDescription = book.volumeInfo.title,
+                contentScale = ContentScale.Crop,
+                modifier = modifier.fillMaxSize()
+            )
+            Box(
+                modifier = modifier.align(Alignment.BottomStart)
+                    .fillMaxWidth()
+                    .padding(8.dp)
+            ) {
+                Text(
+                    text = book.volumeInfo.title,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onPrimary,
+                    modifier = modifier.align(Alignment.BottomStart)
+                        .padding(4.dp)
+                )
+            }
+        }
     }
 }

@@ -8,14 +8,13 @@ import androidx.navigation.compose.rememberNavController
 import com.example.reportmaker.data.ScreenRoutes
 
 @Composable
-fun MainScreen(modifier: Modifier=Modifier,viewModel: ReportViewModel){
+fun MainScreen(modifier: Modifier = Modifier, viewModel: ReportViewModel){
     val navController = rememberNavController()
 
     NavHost(navController = navController, startDestination = ScreenRoutes.Intro.route_name) {
 
         composable(ScreenRoutes.Intro.route_name) {
             IntroScreen(viewmodel = viewModel) {
-
                 navController.navigate(ScreenRoutes.Marks1.route_name)
             }
         }
@@ -47,7 +46,7 @@ fun MainScreen(modifier: Modifier=Modifier,viewModel: ReportViewModel){
                     viewModel.setMarks(subject, value, subjects2)
                 },
                 onNextClicked = {
-                    viewModel.finalizeMarks() // prepare marks before final screen
+                    viewModel.finalizeMarks()
                     navController.navigate(ScreenRoutes.Final.route_name)
                 }
             )
@@ -58,6 +57,8 @@ fun MainScreen(modifier: Modifier=Modifier,viewModel: ReportViewModel){
                 onRestartClicked = {
                     navController.navigate(ScreenRoutes.Intro.route_name) {
                         popUpTo(ScreenRoutes.Intro.route_name) { inclusive = true }
+                        //basically if i press back after pressing restart , it will exit app , but if inc false , pressing back
+                        //will reopen the data like if i had given name in previous run and restart , it will display those again
                     }
                 }
             )

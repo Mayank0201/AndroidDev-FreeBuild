@@ -22,6 +22,7 @@ abstract class NotesDatabase : RoomDatabase() {
                     "notes_database"
                 )
                     .fallbackToDestructiveMigration()
+                    //creates a new database file when a migration issue occurs (version mismatch without a proper migration).
                     .build()
 
                 INSTANCE = instance

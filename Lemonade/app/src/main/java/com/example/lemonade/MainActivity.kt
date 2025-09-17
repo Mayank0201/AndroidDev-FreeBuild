@@ -120,7 +120,7 @@ fun Img(
             colors = CardDefaults.cardColors(containerColor = Color(0xFFFFF8E1))
         ) {
             Column(
-                modifier = modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth()
                     .padding(16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
@@ -128,8 +128,7 @@ fun Img(
                     painter = painterResource(img),
                     contentDescription = stringResource(R.string.img1),
                     contentScale = ContentScale.Fit,
-                    modifier = modifier.fillMaxWidth()
-                        .size(200.dp)
+                    modifier = Modifier.size(200.dp)
                         .clip(RoundedCornerShape(16.dp))
                         .border(
                             3.dp,
@@ -150,13 +149,14 @@ fun Img(
                         }
                 )
 
-                Spacer(modifier = modifier.height(12.dp))
-
+                Spacer(modifier = Modifier.height(16.dp))
+                //modifier(or the name in the parameter) might take up the parents properties
+                //so sometimes better to use Modifier(default)
                 Text(
                     text = stringResource(t),
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Medium,
-                    color = Color.Black
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color(0xFF333333)
                 )
             }
         }
