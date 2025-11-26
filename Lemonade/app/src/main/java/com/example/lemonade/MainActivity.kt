@@ -53,7 +53,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             LemonadeTheme {
-                    Lemonade()
+                Lemonade()
             }
         }
     }
@@ -68,7 +68,7 @@ fun Lemonade(modifier: Modifier = Modifier) {
         )
     }
     ) {
-            innerPadding ->
+        innerPadding ->
         Img(
             modifier = modifier.padding(innerPadding),
             result = result,

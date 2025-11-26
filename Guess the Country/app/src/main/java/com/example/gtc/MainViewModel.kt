@@ -67,7 +67,7 @@ class MainViewModel : ViewModel() {
     }
 
     fun checkAnswer(guess:String){
-        if(guess.lowercase()==(_gameUiState.value.originalWord).lowercase()){
+        if(guess.equals((_gameUiState.value.originalWord), ignoreCase = true)){
             _gameUiState.value = _gameUiState.value.copy(score = _gameUiState.value.score+ scoreIncrease)
             message="Correct! Onto the next one"
             pickWord()

@@ -9,11 +9,16 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.ime
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.BasicAlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -44,121 +49,142 @@ fun MainScreen(modifier: Modifier=Modifier) {
     val boxBorderColor = if (isDarkTheme) Color.LightGray else Color.DarkGray
 
     Column(
-        modifier= modifier.fillMaxSize()
-            .padding(16.dp),
-        horizontalAlignment =Alignment.CenterHorizontally,
-        verticalArrangement =Arrangement.Center
+        modifier = modifier
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState())
+            .windowInsetsPadding(WindowInsets.ime)
+            .padding(bottom = 8.dp,top=4.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Top
     ) {
-        Text(
-            text= stringResource(R.string.app_name),
-            style= MaterialTheme.typography.headlineLarge
-        )
-
-        Spacer(modifier= modifier.height(24.dp))
 
         Box(
-            modifier= modifier.fillMaxWidth()
-                .border(width = 2.dp, color = boxBorderColor, shape = RoundedCornerShape(16.dp))
-                .background(color = boxBackground, shape = RoundedCornerShape(16.dp))
-                .padding(24.dp),
-            contentAlignment= Alignment.Center
+            modifier = modifier
+                .fillMaxWidth()
+                .border(2.dp, boxBorderColor, RoundedCornerShape(16.dp))
+                .background(boxBackground, RoundedCornerShape(16.dp))
+                .padding(horizontal = 8.dp),
+            contentAlignment = Alignment.Center
         ) {
             Column(
-                horizontalAlignment= Alignment.CenterHorizontally,
-                verticalArrangement= Arrangement.spacedBy(8.dp)
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
             ) {
-                Box(
-                    modifier = modifier
-                        .fillMaxWidth()
-                        .background(color = boxBackground),
-                    contentAlignment = Alignment.Center
+                Text(
+                    text = stringResource(R.string.app_name),
+                    style = MaterialTheme.typography.headlineLarge
+                )
+                Row(
+                    modifier = modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    Row(
-                        modifier = modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Text(
-                            text = "Total Score: ${uiState.score}",
-                            style = MaterialTheme.typography.labelMedium
-                        )
-                        Text(
-                            text = "${uiState.wordCount}/10",
-                            style = MaterialTheme.typography.labelMedium
-                        )
-                    }
+                    Text(
+                        text = "Total Score: ${uiState.score}",
+                        style = MaterialTheme.typography.titleMedium
+                    )
+                    Text(
+                        text = "${uiState.wordCount}/10",
+                        style = MaterialTheme.typography.titleMedium
+                    )
                 }
 
                 Text(
-                    text= uiState.scrambledWord,
-                    style= MaterialTheme.typography.displaySmall
+                    text = uiState.scrambledWord,
+                    style = MaterialTheme.typography.displaySmall
                 )
 
                 Text(
-                    text= uiState.originalHint,
-                    style= MaterialTheme.typography.bodyMedium
+                    text = uiState.originalHint,
+                    style = MaterialTheme.typography.bodyLarge
                 )
 
                 TextField(
-                    value= guess,
-                    onValueChange= { guess = it }
+                    value = guess,
+                    onValueChange = { guess = it },
+                    modifier = modifier.fillMaxWidth()
                 )
 
+                Spacer(modifier = Modifier.height(4.dp))
                 Text(
                     text = viewmodel.message,
                     style = MaterialTheme.typography.labelLarge
                 )
 
-                Row(
-                    modifier = modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceAround,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Button(onClick = {
-                        viewmodel.checkAnswer(guess)
-                        guess = ""
-                    }) {
-                        Text(text = "Guess")
-                    }
+                Spacer(modifier = Modifier.height(6.dp))
 
-                    Button(onClick = {
-                        viewmodel.skipWord()
-                        guess = ""
-                    }) {
-                        Text(text = "Skip")
+
+
+                    Row(
+                        modifier = modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceEvenly,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Button(onClick = {
+                            viewmodel.checkAnswer(guess)
+                            guess = ""
+                        }) {
+                            Text("Guess")
+                        }
+
+                        Button(onClick = {
+                            viewmodel.skipWord()
+                            guess = ""
+                        }) {
+                            Text("Skip")
+                        }
+
+
+                        Button(onClick = { guess = "" }) {
+                            Text("Clear")
+                        }
                     }
                 }
             }
         }
+    if (uiState.isGameOver) {
+        EndScreen(viewModel = viewmodel)
     }
-
-
-        if(uiState.isGameOver){
-        EndScreen(viewModel=viewmodel)
-    }
-
 }
-
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun EndScreen(modifier: Modifier=Modifier,viewModel: MainViewModel=viewModel()){
+fun EndScreen(modifier: Modifier = Modifier, viewModel: MainViewModel = viewModel()) {
 
-    val uiState=viewModel.uiState.value
+    val uiState = viewModel.uiState.value
 
     BasicAlertDialog(onDismissRequest = {}) {
         Column(
-            modifier= modifier.padding(24.dp),
-            horizontalAlignment= Alignment.CenterHorizontally,
-            verticalArrangement= Arrangement.Center
+            modifier = modifier
+                .padding(24.dp)
+                .background(Color.White, RoundedCornerShape(20.dp))
+                .border(2.dp, Color.Black, RoundedCornerShape(20.dp))
+                .padding(24.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
         ) {
-            Text(text = viewModel.endMessage)
-            Spacer(modifier= modifier.height(8.dp))
-            Text(text = "Final Score: ${uiState.score}")
-            Spacer(modifier= modifier.height(16.dp))
-            Button(onClick = { viewModel.resetGame() }) {
+
+            Text(
+                text = viewModel.endMessage,
+                style = MaterialTheme.typography.headlineMedium,
+                color = Color.Black
+            )
+
+            Spacer(modifier = modifier.height(12.dp))
+
+            Text(
+                text = "Final Score: ${uiState.score}",
+                style = MaterialTheme.typography.titleLarge,
+                color = Color.DarkGray
+            )
+
+            Spacer(modifier = modifier.height(24.dp))
+
+            Button(
+                onClick = { viewModel.resetGame() },
+                modifier = modifier.fillMaxWidth()
+            ) {
                 Text("Play Again")
             }
         }
     }
 }
-

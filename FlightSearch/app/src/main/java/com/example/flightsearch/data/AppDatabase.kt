@@ -20,9 +20,12 @@ abstract class AppDatabase: RoomDatabase() {
                     AppDatabase::class.java,
                     "app_database"
                 )
-                    // .createFromAsset("database/flight_search.db")
+                    //.createFromAsset("database/flight_search.db")
+                    //do so for the start , then after its loaded , no need for this line
                     // This line loads a prebuilt database from assets, which replaces user data and may wipe the favorites table after reinstall or schema change.
                     .fallbackToDestructiveMigration()
+                    // If the DB schema changes and no migration is provided,
+// this will delete the existing DB and recreate it (data loss).
                     .build()
                     .also {
                         INSTANCE = it

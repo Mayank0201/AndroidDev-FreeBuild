@@ -13,7 +13,7 @@ interface FlightSearchDao {
     @Query("SELECT * FROM favorite ORDER BY id ASC")
     fun getAll(): Flow<List<Favorite>>
 
-    @Query("SELECT * FROM airport WHERE name LIKE :q || '%'")
+    @Query("SELECT * FROM airport WHERE name LIKE '%' || :q || '%' OR iata_code LIKE '%' || :q || '%'")
     fun getItems(q: String): Flow<List<FlightSearch>>
 
     @Query("SELECT * FROM airport WHERE iata_code != :excludedCode")

@@ -19,7 +19,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             MyUnscrambledTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                        MainScreen(modifier=Modifier.padding(innerPadding))
+                    MainScreen(modifier=Modifier.padding(innerPadding))
                 }
             }
         }
