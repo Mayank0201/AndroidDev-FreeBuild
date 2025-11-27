@@ -7,14 +7,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
 import androidx.lifecycle.viewModelScope
-import com.example.notes.data.Notes
+import com.example.notes.model.Notes
 import com.example.notes.data.NotesDao
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.flow.collectLatest
 import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.lifecycle.viewmodel.initializer
-import com.example.notes.data.SearchMode
+import com.example.notes.model.SearchMode
 
 class NotesViewModel(private val notesDao: NotesDao) : ViewModel() {
 
@@ -33,6 +33,10 @@ class NotesViewModel(private val notesDao: NotesDao) : ViewModel() {
     var searchQuery by mutableStateOf("")
     var searchMode by mutableStateOf(SearchMode.ID)
 
+    var noteType by mutableStateOf("None")
+        private set
+
+
     init {
         viewModelScope.launch {
             notesDao.getAllNotes().collectLatest { notesList ->
@@ -47,7 +51,8 @@ class NotesViewModel(private val notesDao: NotesDao) : ViewModel() {
                 id = 0,
                 title = if (titleName.isNotBlank()) titleName else "Untitled",
                 content = itemName,
-                timestamp = System.currentTimeMillis()
+                timestamp = System.currentTimeMillis(),
+                type=noteType
             )
 
             viewModelScope.launch(Dispatchers.IO) {
@@ -75,6 +80,7 @@ class NotesViewModel(private val notesDao: NotesDao) : ViewModel() {
                     if (id != null) notesDao.getNoteById(id) else emptyList()
                 }
                 SearchMode.TITLE -> notesDao.searchByTitle(searchQuery)
+                else -> notesDao.searchByType(searchQuery)
             }
             notes = result
         }
@@ -84,6 +90,9 @@ class NotesViewModel(private val notesDao: NotesDao) : ViewModel() {
         _searchedNote.value = null
     }
 
+    fun updateNoteType(newType: String) {
+        noteType = newType
+    }
     fun deleteNote(note: Notes) {
         viewModelScope.launch(Dispatchers.IO) {
             notesDao.deleteNote(note)
@@ -106,12 +115,13 @@ class NotesViewModel(private val notesDao: NotesDao) : ViewModel() {
         itemName = ""
     }
 
-    fun updateNoteContent(noteId: Int, newTitle: String, newContent: String) {
+    fun updateNoteContent(noteId: Int, newTitle: String, newContent: String, newType:String) {
         val noteToUpdate = notes.find { it.id == noteId } ?: return
         val updatedNote = noteToUpdate.copy(
             title = newTitle,
             content = newContent,
-            timestamp = System.currentTimeMillis()
+            timestamp = System.currentTimeMillis(),
+            type= newType
         )
 
         viewModelScope.launch(Dispatchers.IO) {

@@ -1,6 +1,7 @@
 package com.example.notes.data
 
 import androidx.room.*
+import com.example.notes.model.Notes
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -24,4 +25,6 @@ interface NotesDao {
     @Query("SELECT * FROM notes WHERE title LIKE '%' || :title || '%' COLLATE NOCASE")
     suspend fun searchByTitle(title: String): List<Notes>
 
+    @Query("SELECT * FROM notes WHERE type LIKE :q || '%'")
+    suspend fun searchByType(q: String): List<Notes>
 }

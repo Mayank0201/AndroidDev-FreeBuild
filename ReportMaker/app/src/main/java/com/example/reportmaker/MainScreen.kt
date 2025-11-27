@@ -1,5 +1,6 @@
 package com.example.reportmaker
 
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
@@ -53,7 +54,7 @@ fun MainScreen(modifier: Modifier = Modifier, viewModel: ReportViewModel){
         }
 
         composable(ScreenRoutes.Final.route_name) {
-            FinalScreen(viewModel = viewModel,
+            FinalScreen(modifier=modifier,viewModel = viewModel,
                 onRestartClicked = {
                     navController.navigate(ScreenRoutes.Intro.route_name) {
                         popUpTo(ScreenRoutes.Intro.route_name) { inclusive = true }

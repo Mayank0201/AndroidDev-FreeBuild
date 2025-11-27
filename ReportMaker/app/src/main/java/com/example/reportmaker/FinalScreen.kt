@@ -3,14 +3,13 @@ package com.example.reportmaker
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.*
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -19,6 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -42,52 +42,99 @@ fun FinalScreen(
     ) { padding ->
         Column(
             modifier = modifier.padding(padding)
-                .padding(24.dp),
+                .padding(24.dp)
+                .fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+            verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
             Card(
-                modifier = modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth(),
                 elevation = CardDefaults.cardElevation(8.dp),
                 shape = RoundedCornerShape(20.dp)
             ) {
                 Column(
-                    modifier.padding(20.dp),
+                    modifier = Modifier.padding(20.dp),
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    Text("📄 Report Card", style = MaterialTheme.typography.headlineSmall)
+                    Text(
+                        text = "📄 Report Card",
+                        style = MaterialTheme.typography.headlineSmall,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.fillMaxWidth()
+                    )
 
-                    Text("Name: $name", style = MaterialTheme.typography.bodyLarge)
-                    Text("ID: $id", style = MaterialTheme.typography.bodyLarge)
+                    Text(
+                        "Name: $name",
+                        style = MaterialTheme.typography.bodyLarge,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+
+                    Text(
+                        "ID: $id",
+                        style = MaterialTheme.typography.bodyLarge,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.fillMaxWidth()
+                    )
 
                     Spacer(Modifier.height(12.dp))
 
                     marks?.let {
-                        Text("Marks", style = MaterialTheme.typography.titleMedium)
-                        Text("Maths: ${it.maths}")
-                        Text("English: ${it.english}")
-                        Text("ICT: ${it.ict}")
-                        Text("Physics: ${it.physics}")
-                        Text("Biology: ${it.biology}")
-                        Text("Chemistry: ${it.chemistry}")
+                        Text(
+                            "Marks", style = MaterialTheme.typography.titleMedium,
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier.fillMaxWidth()
+                        )
 
-                        Spacer(modifier.height(12.dp))
-                        Text("Total Marks: $total", style = MaterialTheme.typography.titleMedium)
-                        Text("Result: $result", color = resultColor, style = MaterialTheme.typography.titleLarge)
+                        Text(
+                            "Maths: ${it.maths}",
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier.fillMaxWidth()
+                        )
+                        Text(
+                            "English: ${it.english}",
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier.fillMaxWidth()
+                        )
+                        Text(
+                            "ICT: ${it.ict}",
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier.fillMaxWidth()
+                        )
+                        Text(
+                            "Physics: ${it.physics}",
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier.fillMaxWidth()
+                        )
+                        Text(
+                            "Biology: ${it.biology}",
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier.fillMaxWidth()
+                        )
+                        Text(
+                            "Chemistry: ${it.chemistry}",
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier.fillMaxWidth()
+                        )
+
+                        Spacer(Modifier.height(12.dp))
+
+                        Text(
+                            "Total Marks: $total",
+                            style = MaterialTheme.typography.titleMedium,
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier.fillMaxWidth()
+                        )
+                        Text(
+                            "Result: $result",
+                            color = resultColor,
+                            style = MaterialTheme.typography.titleLarge,
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier.fillMaxWidth()
+                        )
                     } ?: Text("Marks not available")
                 }
-            }
-
-            Button(
-                onClick = {
-                    viewModel.resetAll()
-                    onRestartClicked()
-                },
-                shape = RoundedCornerShape(50),
-                modifier = modifier.fillMaxWidth(0.5f).height(50.dp)
-            ) {
-                Text("Restart")
             }
         }
     }
