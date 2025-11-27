@@ -13,3 +13,4 @@
 .externalNativeBuild
 .cxx
 local.properties
+!Lemonade/app/build/outputs/apk/debug/Lemonade.apk

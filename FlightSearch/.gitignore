@@ -8,8 +8,9 @@
 /.idea/navEditor.xml
 /.idea/assetWizardSettings.xml
 .DS_Store
-/build
+/buildd
 /captures
 .externalNativeBuild
 .cxx
 local.properties
+!"FlightSearch/app/build/outputs/apk/debug/Flight Search.apk"

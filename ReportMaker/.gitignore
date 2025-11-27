@@ -13,4 +13,4 @@
 .externalNativeBuild
 .cxx
 local.properties
-!app/build/outputs/apk/debug/ReportMaker.apk
+!"ReportMaker/app/build/outputs/apk/debug/Report Maker.apk"

@@ -13,3 +13,5 @@
 .externalNativeBuild
 .cxx
 local.properties
+!Bookshelf/app/build/outputs/apk/debug/Bookshelf.apk
+
