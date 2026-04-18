@@ -46,6 +46,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.lemonade.ui.viewmodel.LemonadeViewModel
+import android.content.Context
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,26 +55,30 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             LemonadeTheme {
-                Lemonade()
+                val prefs = this@MainActivity.getSharedPreferences("lemonade_prefs", Context.MODE_PRIVATE)
+                val viewModel = LemonadeViewModel(prefs)
+                Lemonade(viewModel = viewModel)
             }
         }
     }
 }
 
 @Composable
-fun Lemonade(modifier: Modifier = Modifier) {
-    var result by remember { mutableIntStateOf(1) }
+fun Lemonade(modifier: Modifier = Modifier, viewModel : LemonadeViewModel) {
+    var result by remember { mutableIntStateOf(viewModel.result) }
+    var count by remember { mutableIntStateOf(viewModel.count) }
     Scaffold(topBar = {
         LemonadeTopBar(
-            onRestart = { result = 1 }
+            onRestart = { 
+                viewModel.onRestart()
+            }
         )
     }
     ) {
         innerPadding ->
         Img(
             modifier = modifier.padding(innerPadding),
-            result = result,
-            onResultChange = { result = it }
+            viewModel=viewModel
         )
     }
 }
@@ -80,9 +86,14 @@ fun Lemonade(modifier: Modifier = Modifier) {
 @Composable
 fun Img(
     modifier: Modifier = Modifier,
-    result: Int,
-    onResultChange: (Int) -> Unit
+    viewModel: LemonadeViewModel
 ) {
+    val result=viewModel.result
+    val count=viewModel.count
+    val onResultChange = { newResult: Int ->
+        viewModel.onResultChange(newResult)
+    }
+
     val img = when (result) {
         1 -> R.drawable.lemon_tree
         2 -> R.drawable.lemon_squeeze
@@ -101,27 +112,35 @@ fun Img(
     Column(
         modifier = modifier.fillMaxSize()
             .background(color = Color.White)
-            .padding(16.dp),
+            .padding(8.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
+
+        Text(
+            text="Number of Lemonades made: ${count}",
+            fontSize = 18.sp,
+            color = Color(0xFF333333),
+            modifier = Modifier.padding(bottom = 16.dp)
+        )
+
         LinearProgressIndicator(
             progress = { progress },
             modifier = modifier.fillMaxWidth()
-                .padding(bottom = 24.dp),
+                .padding(bottom = 12.dp),
             color = Color(0xFFFFD54F)
         )
 
         Card(
             modifier = modifier.fillMaxWidth()
-                .padding(16.dp),
+                .padding(8.dp),
             shape = RoundedCornerShape(20.dp),
             elevation = CardDefaults.cardElevation(8.dp),
             colors = CardDefaults.cardColors(containerColor = Color(0xFFFFF8E1))
         ) {
             Column(
                 modifier = Modifier.fillMaxWidth()
-                    .padding(16.dp),
+                    .padding(12.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Image(
@@ -137,19 +156,22 @@ fun Img(
                         )
                         .clickable {
                             when (result) {
-                                1 -> onResultChange(2)
+                                1 -> viewModel.onResultChange(2)
                                 2 -> {
                                     val a = (0..3).random()
-                                    if (a == 1) onResultChange(result + a)
+                                    if (a == 1) viewModel.onResultChange(viewModel.result + a)
                                 }
 
-                                4 -> onResultChange(1)
-                                else -> onResultChange(result + 1)
+                                4 -> {
+                                viewModel.incrementCount()
+                                viewModel.onResultChange(1)
+                                }
+                                else -> viewModel.onResultChange(result + 1)
                             }
                         }
                 )
 
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(8.dp))
                 //modifier(or the name in the parameter) might take up the parents properties
                 //so sometimes better to use Modifier(default)
                 Text(
